@@ -82,3 +82,12 @@ desktop.ini
 
 .codex
 .codex/
+
+# =========================
+# Local Python tooling
+# =========================
+
+.venv/
+venv/
+__pycache__/
+*.pyc

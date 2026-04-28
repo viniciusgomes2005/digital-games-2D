@@ -1,0 +1,559 @@
+fileFormatVersion: 2
+guid: f7cc8dec49588f379aea961d0add908e
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 7072448011222782308
+    second: nox_walk_sheet_4dir_4f_0
+  - first:
+      213: 4066488012633863925
+    second: nox_walk_sheet_4dir_4f_1
+  - first:
+      213: -4769113347455121625
+    second: nox_walk_sheet_4dir_4f_2
+  - first:
+      213: 5138014278578646966
+    second: nox_walk_sheet_4dir_4f_3
+  - first:
+      213: -1618028497026227136
+    second: nox_walk_sheet_4dir_4f_4
+  - first:
+      213: 2545817543899659997
+    second: nox_walk_sheet_4dir_4f_5
+  - first:
+      213: -1073539344314032962
+    second: nox_walk_sheet_4dir_4f_6
+  - first:
+      213: 6452659776181551076
+    second: nox_walk_sheet_4dir_4f_7
+  - first:
+      213: -9066236336442936310
+    second: nox_walk_sheet_4dir_4f_8
+  - first:
+      213: -6380967964743994386
+    second: nox_walk_sheet_4dir_4f_9
+  - first:
+      213: -729703563386095439
+    second: nox_walk_sheet_4dir_4f_10
+  - first:
+      213: 3233425959835229327
+    second: nox_walk_sheet_4dir_4f_11
+  - first:
+      213: -3216172660102065982
+    second: nox_walk_sheet_4dir_4f_12
+  - first:
+      213: 8010911866545591978
+    second: nox_walk_sheet_4dir_4f_13
+  - first:
+      213: 6374616708308032354
+    second: nox_walk_sheet_4dir_4f_14
+  - first:
+      213: 3039369768282209109
+    second: nox_walk_sheet_4dir_4f_15
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 9
+  spritePivot: {x: 0.5, y: 0}
+  spritePixelsToUnits: 32
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: nox_walk_sheet_4dir_4f_0
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 202
+        width: 27
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4611a59aef1662260800000000000000
+      internalID: 7072448011222782308
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nox_walk_sheet_4dir_4f_1
+      rect:
+        serializedVersion: 2
+        x: 59
+        y: 203
+        width: 27
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5f6fc646d411f6830800000000000000
+      internalID: 4066488012633863925
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nox_walk_sheet_4dir_4f_2
+      rect:
+        serializedVersion: 2
+        x: 107
+        y: 202
+        width: 27
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7270d57ada4b0ddb0800000000000000
+      internalID: -4769113347455121625
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nox_walk_sheet_4dir_4f_3
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 201
+        width: 27
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6bfa09593c4ed4740800000000000000
+      internalID: 5138014278578646966
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nox_walk_sheet_4dir_4f_4
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 138
+        width: 25
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 044ea4697ab9b89e0800000000000000
+      internalID: -1618028497026227136
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nox_walk_sheet_4dir_4f_5
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 139
+        width: 26
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ddeb81f519f845320800000000000000
+      internalID: 2545817543899659997
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nox_walk_sheet_4dir_4f_6
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 138
+        width: 27
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ebc91c977a50a11f0800000000000000
+      internalID: -1073539344314032962
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nox_walk_sheet_4dir_4f_7
+      rect:
+        serializedVersion: 2
+        x: 156
+        y: 137
+        width: 26
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4efb0c7f0e37c8950800000000000000
+      internalID: 6452659776181551076
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nox_walk_sheet_4dir_4f_8
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 74
+        width: 27
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a04749446124e2280800000000000000
+      internalID: -9066236336442936310
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nox_walk_sheet_4dir_4f_9
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 75
+        width: 27
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ee37942a17f3277a0800000000000000
+      internalID: -6380967964743994386
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nox_walk_sheet_4dir_4f_10
+      rect:
+        serializedVersion: 2
+        x: 106
+        y: 74
+        width: 27
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1b8f809a9729fd5f0800000000000000
+      internalID: -729703563386095439
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nox_walk_sheet_4dir_4f_11
+      rect:
+        serializedVersion: 2
+        x: 154
+        y: 73
+        width: 27
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f8c518f67cf6fdc20800000000000000
+      internalID: 3233425959835229327
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nox_walk_sheet_4dir_4f_12
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 10
+        width: 27
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2c01b42710cdd53d0800000000000000
+      internalID: -3216172660102065982
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nox_walk_sheet_4dir_4f_13
+      rect:
+        serializedVersion: 2
+        x: 59
+        y: 11
+        width: 27
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aa6596426e97c2f60800000000000000
+      internalID: 8010911866545591978
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nox_walk_sheet_4dir_4f_14
+      rect:
+        serializedVersion: 2
+        x: 107
+        y: 10
+        width: 27
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 26b58fd3f10377850800000000000000
+      internalID: 6374616708308032354
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nox_walk_sheet_4dir_4f_15
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 9
+        width: 27
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 55bb58373b20e2a20800000000000000
+      internalID: 3039369768282209109
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      nox_walk_sheet_4dir_4f_0: 7072448011222782308
+      nox_walk_sheet_4dir_4f_1: 4066488012633863925
+      nox_walk_sheet_4dir_4f_10: -729703563386095439
+      nox_walk_sheet_4dir_4f_11: 3233425959835229327
+      nox_walk_sheet_4dir_4f_12: -3216172660102065982
+      nox_walk_sheet_4dir_4f_13: 8010911866545591978
+      nox_walk_sheet_4dir_4f_14: 6374616708308032354
+      nox_walk_sheet_4dir_4f_15: 3039369768282209109
+      nox_walk_sheet_4dir_4f_2: -4769113347455121625
+      nox_walk_sheet_4dir_4f_3: 5138014278578646966
+      nox_walk_sheet_4dir_4f_4: -1618028497026227136
+      nox_walk_sheet_4dir_4f_5: 2545817543899659997
+      nox_walk_sheet_4dir_4f_6: -1073539344314032962
+      nox_walk_sheet_4dir_4f_7: 6452659776181551076
+      nox_walk_sheet_4dir_4f_8: -9066236336442936310
+      nox_walk_sheet_4dir_4f_9: -6380967964743994386
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
