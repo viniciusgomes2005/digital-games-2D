@@ -27,7 +27,7 @@ public class PlayerController : MonoBehaviour
         if (movement.x != 0)
         {
             Vector3 scale = transform.localScale;
-            scale.x = Mathf.Abs(scale.x) * Mathf.Sign(movement.x);
+            scale.x = Mathf.Abs(scale.x) * -Mathf.Sign(movement.x);
             transform.localScale = scale;
         }
     }
