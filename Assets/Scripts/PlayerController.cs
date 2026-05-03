@@ -4,6 +4,8 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 5f;
 
+    private static readonly int IsMovingHash = Animator.StringToHash("IsMoving");
+
     private Rigidbody2D rb;
     private Animator animator;
     private Vector2 movement;
@@ -22,7 +24,10 @@ public class PlayerController : MonoBehaviour
         movement = movement.normalized;
 
         bool isMoving = movement.sqrMagnitude > 0.01f;
-        animator.SetBool("IsMoving", isMoving);
+        if (animator != null)
+        {
+            animator.SetBool(IsMovingHash, isMoving);
+        }
 
         if (movement.x != 0)
         {
@@ -34,6 +39,11 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (rb == null)
+        {
+            return;
+        }
+
         rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
     }
 }

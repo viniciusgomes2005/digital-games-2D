@@ -428,10 +428,8 @@ GameObject:
   - component: {fileID: 1421397323}
   - component: {fileID: 1421397322}
   - component: {fileID: 1421397326}
-  - component: {fileID: 1421397328}
   - component: {fileID: 1421397325}
   - component: {fileID: 1421397327}
-  - component: {fileID: 1421397329}
   m_Layer: 6
   m_Name: Protagonista
   m_TagString: Player
@@ -621,36 +619,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.875, y: 2.4166667}
   m_EdgeRadius: 0
---- !u!114 &1421397328
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1421397321}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd21f9c70f3fc467c5a3b04e9585de1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerCombat
-  attackKey: 99
-  comboWindowStart: 0.4
-  comboWindowEnd: 0.9
---- !u!114 &1421397329
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1421397321}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd21f9c70f3fc467c5a3b04e9585de1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerCombat
-  attackKey: 106
-  comboWindowStart: 0.4
-  comboWindowEnd: 0.9
 --- !u!1 &1997445288
 GameObject:
   m_ObjectHideFlags: 0
