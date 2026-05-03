@@ -177,12 +177,12 @@ TextureImporter:
       name: frogger_spit_0
       rect:
         serializedVersion: 2
-        x: 155
+        x: 0
         y: 0
-        width: 74
-        height: 59
+        width: 384
+        height: 128
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -199,12 +199,12 @@ TextureImporter:
       name: frogger_spit_1
       rect:
         serializedVersion: 2
-        x: 537
+        x: 384
         y: 0
-        width: 79
-        height: 60
+        width: 384
+        height: 128
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -221,12 +221,12 @@ TextureImporter:
       name: frogger_spit_2
       rect:
         serializedVersion: 2
-        x: 921
+        x: 768
         y: 0
-        width: 80
-        height: 63
+        width: 384
+        height: 128
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -243,12 +243,12 @@ TextureImporter:
       name: frogger_spit_3
       rect:
         serializedVersion: 2
-        x: 1305
+        x: 1152
         y: 0
-        width: 84
-        height: 64
+        width: 384
+        height: 128
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -265,12 +265,12 @@ TextureImporter:
       name: frogger_spit_4
       rect:
         serializedVersion: 2
-        x: 1689
+        x: 1536
         y: 0
-        width: 85
-        height: 64
+        width: 384
+        height: 128
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -287,12 +287,12 @@ TextureImporter:
       name: frogger_spit_5
       rect:
         serializedVersion: 2
-        x: 2073
+        x: 1920
         y: 0
-        width: 87
-        height: 64
+        width: 384
+        height: 128
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -309,12 +309,12 @@ TextureImporter:
       name: frogger_spit_6
       rect:
         serializedVersion: 2
-        x: 2459
+        x: 2304
         y: 0
-        width: 89
-        height: 55
+        width: 384
+        height: 128
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -331,12 +331,12 @@ TextureImporter:
       name: frogger_spit_7
       rect:
         serializedVersion: 2
-        x: 2844
+        x: 2688
         y: 0
-        width: 195
-        height: 54
+        width: 384
+        height: 128
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -353,12 +353,12 @@ TextureImporter:
       name: frogger_spit_8
       rect:
         serializedVersion: 2
-        x: 3228
+        x: 3072
         y: 0
-        width: 82
-        height: 53
+        width: 384
+        height: 128
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -375,12 +375,12 @@ TextureImporter:
       name: frogger_spit_9
       rect:
         serializedVersion: 2
-        x: 3353
-        y: 2
-        width: 79
-        height: 27
+        x: 3456
+        y: 0
+        width: 384
+        height: 128
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -397,12 +397,12 @@ TextureImporter:
       name: frogger_spit_10
       rect:
         serializedVersion: 2
-        x: 3365
+        x: 3840
         y: 0
-        width: 37
-        height: 15
+        width: 384
+        height: 128
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -415,143 +415,11 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
-    - serializedVersion: 2
-      name: frogger_spit_11
-      rect:
-        serializedVersion: 2
-        x: 3612
-        y: 0
-        width: 81
-        height: 55
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 500a047aea964f050800000000000000
-      internalID: 5833403616202891269
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: frogger_spit_12
-      rect:
-        serializedVersion: 2
-        x: 3760
-        y: 0
-        width: 20
-        height: 9
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 6ab2b9fa7f4dfe410800000000000000
-      internalID: 1508658560460598182
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: frogger_spit_13
-      rect:
-        serializedVersion: 2
-        x: 3783
-        y: 0
-        width: 23
-        height: 9
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: c30f3d4202f6c9ac0800000000000000
-      internalID: -3847077797833740228
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: frogger_spit_14
-      rect:
-        serializedVersion: 2
-        x: 3787
-        y: 1
-        width: 46
-        height: 18
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: ec067a22124b41d30800000000000000
-      internalID: 4401340790256132302
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: frogger_spit_15
-      rect:
-        serializedVersion: 2
-        x: 3995
-        y: 0
-        width: 81
-        height: 55
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 6bf87f561dfadc070800000000000000
-      internalID: 8128346216367361974
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: frogger_spit_16
-      rect:
-        serializedVersion: 2
-        x: 4156
-        y: 0
-        width: 67
-        height: 9
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 6618a9ed4ec3de890800000000000000
-      internalID: -7427213256779202202
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: f49419ec127fab3249c0319f5c621c25
     internalID: 0
     vertices: []
     indices: 
@@ -559,17 +427,13 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":11.0,"y":1.0},"gridSpriteSize":{"x":384.0,"y":128.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
       frogger_spit_0: -1714469657902318279
       frogger_spit_1: -9126700972499798647
       frogger_spit_10: -5325262051703374661
-      frogger_spit_11: 5833403616202891269
-      frogger_spit_12: 1508658560460598182
-      frogger_spit_13: -3847077797833740228
-      frogger_spit_14: 4401340790256132302
-      frogger_spit_15: 8128346216367361974
-      frogger_spit_16: -7427213256779202202
       frogger_spit_2: -8903225931996906712
       frogger_spit_3: -3044677338854198816
       frogger_spit_4: 8044338208951387184
