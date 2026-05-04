@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 /*
@@ -28,6 +29,9 @@ public class PlayerCombat : MonoBehaviour
     [SerializeField] private KeyCode attackKey = KeyCode.J;
     [SerializeField] private float comboWindowStart = 0.4f;
     [SerializeField] private float comboWindowEnd = 0.9f;
+    [SerializeField] private float hitboxStartDelay = 0.12f;
+    [SerializeField] private float hitboxActiveTime = 0.18f;
+    [SerializeField] private GameObject attackHitbox;
 
     private static readonly int AttackHash = Animator.StringToHash("Attack");
     private static readonly int Attack2Hash = Animator.StringToHash("Attack2");
@@ -35,12 +39,21 @@ public class PlayerCombat : MonoBehaviour
     private static readonly int HurtHash = Animator.StringToHash("Hurt");
 
     private Animator animator;
+    private PlayerAttackHitbox playerAttackHitbox;
     private bool attack2Requested;
     private bool attack3Requested;
+    private Coroutine attackHitboxRoutine;
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
+        ResolveAttackHitbox();
+    }
+
+    private void OnDisable()
+    {
+        StopAttackHitboxRoutine();
+        SetAttackHitboxActive(false);
     }
 
     private void Update()
@@ -95,6 +108,7 @@ public class PlayerCombat : MonoBehaviour
         }
 
         animator.SetTrigger(AttackHash);
+        StartAttackHitboxWindow();
     }
 
     public void TriggerHurt()
@@ -126,6 +140,7 @@ public class PlayerCombat : MonoBehaviour
         attack2Requested = true;
         animator.ResetTrigger(AttackHash);
         animator.SetTrigger(Attack2Hash);
+        StartAttackHitboxWindow();
     }
 
     private void TryRequestAttack3(AnimatorStateInfo attack2StateInfo)
@@ -147,6 +162,91 @@ public class PlayerCombat : MonoBehaviour
         animator.ResetTrigger(AttackHash);
         animator.ResetTrigger(Attack2Hash);
         animator.SetTrigger(Attack3Hash);
+        StartAttackHitboxWindow();
+    }
+
+    private void ResolveAttackHitbox()
+    {
+        if (attackHitbox == null)
+        {
+            Transform hitboxTransform = transform.Find("AttackHitbox");
+            if (hitboxTransform != null)
+            {
+                attackHitbox = hitboxTransform.gameObject;
+            }
+        }
+
+        if (attackHitbox == null)
+        {
+            return;
+        }
+
+        playerAttackHitbox = attackHitbox.GetComponent<PlayerAttackHitbox>();
+        if (playerAttackHitbox == null)
+        {
+            playerAttackHitbox = attackHitbox.AddComponent<PlayerAttackHitbox>();
+        }
+
+        SetAttackHitboxActive(false);
+    }
+
+    private void StartAttackHitboxWindow()
+    {
+        if (attackHitbox == null)
+        {
+            return;
+        }
+
+        StopAttackHitboxRoutine();
+        attackHitboxRoutine = StartCoroutine(AttackHitboxRoutine());
+    }
+
+    private IEnumerator AttackHitboxRoutine()
+    {
+        SetAttackHitboxActive(false);
+
+        if (hitboxStartDelay > 0f)
+        {
+            yield return new WaitForSeconds(hitboxStartDelay);
+        }
+
+        ResetAttackHitbox();
+        SetAttackHitboxActive(true);
+
+        if (hitboxActiveTime > 0f)
+        {
+            yield return new WaitForSeconds(hitboxActiveTime);
+        }
+
+        SetAttackHitboxActive(false);
+        attackHitboxRoutine = null;
+    }
+
+    private void StopAttackHitboxRoutine()
+    {
+        if (attackHitboxRoutine == null)
+        {
+            return;
+        }
+
+        StopCoroutine(attackHitboxRoutine);
+        attackHitboxRoutine = null;
+    }
+
+    private void ResetAttackHitbox()
+    {
+        if (playerAttackHitbox != null)
+        {
+            playerAttackHitbox.ResetHitbox();
+        }
+    }
+
+    private void SetAttackHitboxActive(bool active)
+    {
+        if (attackHitbox != null && attackHitbox.activeSelf != active)
+        {
+            attackHitbox.SetActive(active);
+        }
     }
 
     private AttackState GetCurrentAttackState()
@@ -202,6 +302,8 @@ public class PlayerCombat : MonoBehaviour
     {
         comboWindowStart = Mathf.Clamp01(comboWindowStart);
         comboWindowEnd = Mathf.Clamp01(comboWindowEnd);
+        hitboxStartDelay = Mathf.Max(0f, hitboxStartDelay);
+        hitboxActiveTime = Mathf.Max(0f, hitboxActiveTime);
 
         if (comboWindowEnd < comboWindowStart)
         {

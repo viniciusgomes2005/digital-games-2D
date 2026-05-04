@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody2D rb;
     private Animator animator;
-    private Vector2 movement;
+    private float horizontalInput;
 
     private void Awake()
     {
@@ -18,21 +18,18 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        movement.x = Input.GetAxisRaw("Horizontal");
-        movement.y = Input.GetAxisRaw("Vertical");
+        horizontalInput = Input.GetAxisRaw("Horizontal");
 
-        movement = movement.normalized;
-
-        bool isMoving = movement.sqrMagnitude > 0.01f;
+        bool isMoving = Mathf.Abs(horizontalInput) > 0.01f;
         if (animator != null)
         {
             animator.SetBool(IsMovingHash, isMoving);
         }
 
-        if (movement.x != 0)
+        if (horizontalInput != 0)
         {
             Vector3 scale = transform.localScale;
-            scale.x = Mathf.Abs(scale.x) * -Mathf.Sign(movement.x);
+            scale.x = Mathf.Abs(scale.x) * -Mathf.Sign(horizontalInput);
             transform.localScale = scale;
         }
     }
@@ -44,6 +41,7 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
+        Vector2 currentVelocity = rb.linearVelocity;
+        rb.linearVelocity = new Vector2(horizontalInput * moveSpeed, currentVelocity.y);
     }
 }
