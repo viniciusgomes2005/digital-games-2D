@@ -31,28 +31,36 @@ public class PlayerCombat : MonoBehaviour
     [SerializeField] private float comboWindowEnd = 0.9f;
     [SerializeField] private float hitboxStartDelay = 0.12f;
     [SerializeField] private float hitboxActiveTime = 0.18f;
+    [SerializeField] private float jumpAttackDiveDelay = 0.06f;
     [SerializeField] private GameObject attackHitbox;
 
     private static readonly int AttackHash = Animator.StringToHash("Attack");
     private static readonly int Attack2Hash = Animator.StringToHash("Attack2");
     private static readonly int Attack3Hash = Animator.StringToHash("Attack3");
+    private static readonly int JumpAttackHash = Animator.StringToHash("JumpAttack");
+    private static readonly int JumpAttackStateHash = Animator.StringToHash("JumpAttack");
     private static readonly int HurtHash = Animator.StringToHash("Hurt");
 
     private Animator animator;
+    private PlayerController playerController;
     private PlayerAttackHitbox playerAttackHitbox;
     private bool attack2Requested;
     private bool attack3Requested;
+    private bool airAttackUsed;
     private Coroutine attackHitboxRoutine;
+    private Coroutine jumpAttackDiveRoutine;
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
+        playerController = GetComponent<PlayerController>();
         ResolveAttackHitbox();
     }
 
     private void OnDisable()
     {
         StopAttackHitboxRoutine();
+        StopJumpAttackDiveRoutine();
         SetAttackHitboxActive(false);
     }
 
@@ -66,6 +74,13 @@ public class PlayerCombat : MonoBehaviour
         AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
         AttackState currentAttackState = GetCurrentAttackState();
         bool isTransitioningToAttack = IsAnimatorTransitioningToAttack();
+        bool isGrounded = playerController == null || playerController.IsGrounded;
+        bool isAirborne = playerController != null && playerController.IsAirborne;
+
+        if (isGrounded && !isAirborne)
+        {
+            airAttackUsed = false;
+        }
 
         if (currentAttackState != AttackState.Attack1)
         {
@@ -79,6 +94,12 @@ public class PlayerCombat : MonoBehaviour
 
         if (!Input.GetKeyDown(attackKey))
         {
+            return;
+        }
+
+        if (isAirborne)
+        {
+            TryRequestJumpAttack(currentAttackState, isTransitioningToAttack);
             return;
         }
 
@@ -165,6 +186,25 @@ public class PlayerCombat : MonoBehaviour
         StartAttackHitboxWindow();
     }
 
+    private void TryRequestJumpAttack(AttackState currentAttackState, bool isTransitioningToAttack)
+    {
+        if (airAttackUsed || currentAttackState != AttackState.None || isTransitioningToAttack)
+        {
+            return;
+        }
+
+        airAttackUsed = true;
+        animator.ResetTrigger(AttackHash);
+        animator.ResetTrigger(Attack2Hash);
+        animator.ResetTrigger(Attack3Hash);
+        animator.ResetTrigger(JumpAttackHash);
+        animator.SetTrigger(JumpAttackHash);
+        animator.Play(JumpAttackStateHash, 0, 0f);
+
+        StartJumpAttackDiveRoutine();
+        StartAttackHitboxWindow();
+    }
+
     private void ResolveAttackHitbox()
     {
         if (attackHitbox == null)
@@ -233,6 +273,39 @@ public class PlayerCombat : MonoBehaviour
         attackHitboxRoutine = null;
     }
 
+    private void StartJumpAttackDiveRoutine()
+    {
+        if (playerController == null)
+        {
+            return;
+        }
+
+        StopJumpAttackDiveRoutine();
+        jumpAttackDiveRoutine = StartCoroutine(JumpAttackDiveRoutine());
+    }
+
+    private IEnumerator JumpAttackDiveRoutine()
+    {
+        if (jumpAttackDiveDelay > 0f)
+        {
+            yield return new WaitForSeconds(jumpAttackDiveDelay);
+        }
+
+        playerController.StartJumpAttackDive();
+        jumpAttackDiveRoutine = null;
+    }
+
+    private void StopJumpAttackDiveRoutine()
+    {
+        if (jumpAttackDiveRoutine == null)
+        {
+            return;
+        }
+
+        StopCoroutine(jumpAttackDiveRoutine);
+        jumpAttackDiveRoutine = null;
+    }
+
     private void ResetAttackHitbox()
     {
         if (playerAttackHitbox != null)
@@ -268,6 +341,11 @@ public class PlayerCombat : MonoBehaviour
             return AttackState.Attack3;
         }
 
+        if (currentStateInfo.IsName("JumpAttack"))
+        {
+            return AttackState.JumpAttack;
+        }
+
         return AttackState.None;
     }
 
@@ -295,6 +373,11 @@ public class PlayerCombat : MonoBehaviour
             return true;
         }
 
+        if (nextStateInfo.IsName("JumpAttack"))
+        {
+            return true;
+        }
+
         return false;
     }
 
@@ -304,6 +387,7 @@ public class PlayerCombat : MonoBehaviour
         comboWindowEnd = Mathf.Clamp01(comboWindowEnd);
         hitboxStartDelay = Mathf.Max(0f, hitboxStartDelay);
         hitboxActiveTime = Mathf.Max(0f, hitboxActiveTime);
+        jumpAttackDiveDelay = Mathf.Max(0f, jumpAttackDiveDelay);
 
         if (comboWindowEnd < comboWindowStart)
         {
@@ -316,6 +400,7 @@ public class PlayerCombat : MonoBehaviour
         None,
         Attack1,
         Attack2,
-        Attack3
+        Attack3,
+        JumpAttack
     }
 }
