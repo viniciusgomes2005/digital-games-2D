@@ -149,13 +149,19 @@ public class FrogEnemy : MonoBehaviour
 
     public void TakeHit()
     {
+        TakeDamage(1);
+    }
+
+    public void TakeDamage(int amount)
+    {
         if (isDead || Time.time < nextHurtTime)
         {
             return;
         }
 
+        int damage = Mathf.Max(1, amount);
         nextHurtTime = Time.time + hurtCooldown;
-        hitsTaken++;
+        hitsTaken += damage;
 
         if (attackRoutine != null)
         {

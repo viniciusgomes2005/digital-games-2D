@@ -4,7 +4,14 @@ using UnityEngine;
 [RequireComponent(typeof(Collider2D))]
 public class PlayerAttackHitbox : MonoBehaviour
 {
+    [SerializeField] private int damage = 1;
+
     private readonly HashSet<FrogEnemy> hitTargets = new HashSet<FrogEnemy>();
+
+    public void SetDamage(int damage)
+    {
+        this.damage = Mathf.Max(0, damage);
+    }
 
     public void ResetHitbox()
     {
@@ -44,6 +51,11 @@ public class PlayerAttackHitbox : MonoBehaviour
         }
 
         hitTargets.Add(frogEnemy);
-        frogEnemy.TakeHit();
+        frogEnemy.TakeDamage(damage);
+    }
+
+    private void OnValidate()
+    {
+        damage = Mathf.Max(0, damage);
     }
 }

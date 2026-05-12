@@ -26,13 +26,29 @@ using UnityEngine;
  */
 public class PlayerCombat : MonoBehaviour
 {
+    [Header("Input")]
     [SerializeField] private KeyCode attackKey = KeyCode.J;
+
+    [Header("Combo")]
     [SerializeField] private float comboWindowStart = 0.4f;
     [SerializeField] private float comboWindowEnd = 0.9f;
+    [SerializeField, Range(0f, 1f)] private float unlockAttack2At = 0.2f;
+    [SerializeField, Range(0f, 1f)] private float unlockAttack3At = 0.5f;
+    [SerializeField] private int attack1Damage = 1;
+    [SerializeField] private int attack2Damage = 2;
+    [SerializeField] private int attack3Damage = 3;
+
+    [Header("Hitbox")]
     [SerializeField] private float hitboxStartDelay = 0.12f;
     [SerializeField] private float hitboxActiveTime = 0.18f;
     [SerializeField] private float jumpAttackDiveDelay = 0.06f;
     [SerializeField] private GameObject attackHitbox;
+
+    [Header("References")]
+    [SerializeField] private Animator animator;
+    [SerializeField] private PlayerAttackHitbox playerAttackHitbox;
+    [SerializeField] private YokaiEnergyBarController energyController;
+    [SerializeField] private GameObject unlockMessageReceiver;
 
     private static readonly int AttackHash = Animator.StringToHash("Attack");
     private static readonly int Attack2Hash = Animator.StringToHash("Attack2");
@@ -41,20 +57,26 @@ public class PlayerCombat : MonoBehaviour
     private static readonly int JumpAttackStateHash = Animator.StringToHash("JumpAttack");
     private static readonly int HurtHash = Animator.StringToHash("Hurt");
 
-    private Animator animator;
     private PlayerController playerController;
-    private PlayerAttackHitbox playerAttackHitbox;
     private bool attack2Requested;
     private bool attack3Requested;
     private bool airAttackUsed;
+    private int previousMaxUnlockedComboStep = 1;
+    private int currentAttackDamage = 1;
     private Coroutine attackHitboxRoutine;
     private Coroutine jumpAttackDiveRoutine;
 
     private void Awake()
     {
-        animator = GetComponent<Animator>();
+        if (animator == null)
+        {
+            animator = GetComponent<Animator>();
+        }
+
         playerController = GetComponent<PlayerController>();
+        ResolveEnergyController();
         ResolveAttackHitbox();
+        previousMaxUnlockedComboStep = GetMaxUnlockedComboStep();
     }
 
     private void OnDisable()
@@ -76,6 +98,8 @@ public class PlayerCombat : MonoBehaviour
         bool isTransitioningToAttack = IsAnimatorTransitioningToAttack();
         bool isGrounded = playerController == null || playerController.IsGrounded;
         bool isAirborne = playerController != null && playerController.IsAirborne;
+
+        CheckUnlockFeedback();
 
         if (isGrounded && !isAirborne)
         {
@@ -129,7 +153,7 @@ public class PlayerCombat : MonoBehaviour
         }
 
         animator.SetTrigger(AttackHash);
-        StartAttackHitboxWindow();
+        StartAttackHitboxWindow(attack1Damage);
     }
 
     public void TriggerHurt()
@@ -145,6 +169,12 @@ public class PlayerCombat : MonoBehaviour
 
     private void TryRequestAttack2(AnimatorStateInfo attack1StateInfo)
     {
+        if (GetMaxUnlockedComboStep() < 2)
+        {
+            animator.ResetTrigger(Attack2Hash);
+            return;
+        }
+
         if (attack2Requested)
         {
             return;
@@ -161,11 +191,17 @@ public class PlayerCombat : MonoBehaviour
         attack2Requested = true;
         animator.ResetTrigger(AttackHash);
         animator.SetTrigger(Attack2Hash);
-        StartAttackHitboxWindow();
+        StartAttackHitboxWindow(attack2Damage);
     }
 
     private void TryRequestAttack3(AnimatorStateInfo attack2StateInfo)
     {
+        if (GetMaxUnlockedComboStep() < 3)
+        {
+            animator.ResetTrigger(Attack3Hash);
+            return;
+        }
+
         if (attack3Requested)
         {
             return;
@@ -183,7 +219,7 @@ public class PlayerCombat : MonoBehaviour
         animator.ResetTrigger(AttackHash);
         animator.ResetTrigger(Attack2Hash);
         animator.SetTrigger(Attack3Hash);
-        StartAttackHitboxWindow();
+        StartAttackHitboxWindow(attack3Damage);
     }
 
     private void TryRequestJumpAttack(AttackState currentAttackState, bool isTransitioningToAttack)
@@ -202,7 +238,69 @@ public class PlayerCombat : MonoBehaviour
         animator.Play(JumpAttackStateHash, 0, 0f);
 
         StartJumpAttackDiveRoutine();
-        StartAttackHitboxWindow();
+        StartAttackHitboxWindow(attack1Damage);
+    }
+
+    private int GetMaxUnlockedComboStep()
+    {
+        float energy = energyController != null ? energyController.NormalizedEnergy : 0f;
+
+        if (energy >= unlockAttack3At)
+        {
+            return 3;
+        }
+
+        if (energy >= unlockAttack2At)
+        {
+            return 2;
+        }
+
+        return 1;
+    }
+
+    private void CheckUnlockFeedback()
+    {
+        int maxUnlockedComboStep = GetMaxUnlockedComboStep();
+        if (maxUnlockedComboStep <= previousMaxUnlockedComboStep)
+        {
+            return;
+        }
+
+        if (maxUnlockedComboStep >= 2 && previousMaxUnlockedComboStep < 2)
+        {
+            ShowUnlockMessage("Combo II Unlocked");
+        }
+
+        if (maxUnlockedComboStep >= 3 && previousMaxUnlockedComboStep < 3)
+        {
+            ShowUnlockMessage("Combo III Unlocked");
+        }
+
+        previousMaxUnlockedComboStep = maxUnlockedComboStep;
+    }
+
+    private void ShowUnlockMessage(string message)
+    {
+        if (unlockMessageReceiver == null)
+        {
+            return;
+        }
+
+        unlockMessageReceiver.SendMessage("ShowUnlockMessage", message, SendMessageOptions.DontRequireReceiver);
+    }
+
+    private void ResolveEnergyController()
+    {
+        if (energyController != null)
+        {
+            return;
+        }
+
+#if UNITY_2023_1_OR_NEWER
+        energyController = FindAnyObjectByType<YokaiEnergyBarController>();
+#else
+        energyController = FindObjectOfType<YokaiEnergyBarController>();
+#endif
     }
 
     private void ResolveAttackHitbox()
@@ -230,11 +328,17 @@ public class PlayerCombat : MonoBehaviour
         SetAttackHitboxActive(false);
     }
 
-    private void StartAttackHitboxWindow()
+    private void StartAttackHitboxWindow(int damage)
     {
         if (attackHitbox == null)
         {
             return;
+        }
+
+        currentAttackDamage = Mathf.Max(0, damage);
+        if (playerAttackHitbox != null)
+        {
+            playerAttackHitbox.SetDamage(currentAttackDamage);
         }
 
         StopAttackHitboxRoutine();
@@ -251,6 +355,11 @@ public class PlayerCombat : MonoBehaviour
         }
 
         ResetAttackHitbox();
+        if (playerAttackHitbox != null)
+        {
+            playerAttackHitbox.SetDamage(currentAttackDamage);
+        }
+
         SetAttackHitboxActive(true);
 
         if (hitboxActiveTime > 0f)
@@ -341,6 +450,11 @@ public class PlayerCombat : MonoBehaviour
             return AttackState.Attack3;
         }
 
+        if (currentStateInfo.IsName("3x_attack"))
+        {
+            return AttackState.Attack3;
+        }
+
         if (currentStateInfo.IsName("JumpAttack"))
         {
             return AttackState.JumpAttack;
@@ -373,6 +487,11 @@ public class PlayerCombat : MonoBehaviour
             return true;
         }
 
+        if (nextStateInfo.IsName("3x_attack"))
+        {
+            return true;
+        }
+
         if (nextStateInfo.IsName("JumpAttack"))
         {
             return true;
@@ -385,6 +504,11 @@ public class PlayerCombat : MonoBehaviour
     {
         comboWindowStart = Mathf.Clamp01(comboWindowStart);
         comboWindowEnd = Mathf.Clamp01(comboWindowEnd);
+        unlockAttack2At = Mathf.Clamp01(unlockAttack2At);
+        unlockAttack3At = Mathf.Clamp01(unlockAttack3At);
+        attack1Damage = Mathf.Max(0, attack1Damage);
+        attack2Damage = Mathf.Max(0, attack2Damage);
+        attack3Damage = Mathf.Max(0, attack3Damage);
         hitboxStartDelay = Mathf.Max(0f, hitboxStartDelay);
         hitboxActiveTime = Mathf.Max(0f, hitboxActiveTime);
         jumpAttackDiveDelay = Mathf.Max(0f, jumpAttackDiveDelay);
