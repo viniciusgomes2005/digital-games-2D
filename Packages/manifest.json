@@ -56,7 +56,6 @@
     "com.unity.modules.video": "1.0.0",
     "com.unity.modules.vr": "1.0.0",
     "com.unity.modules.wind": "1.0.0",
-    "com.unity.modules.xr": "1.0.0",
-    "com.besty.unity-skills": "file:/home/vini/dev/Unity-Skills/SkillsForUnity"
+    "com.unity.modules.xr": "1.0.0"
   }
 }
