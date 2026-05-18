@@ -9,6 +9,11 @@ public class PlayerHurt : MonoBehaviour
     [SerializeField] private int hitsUntilDefeat = 3;
     [SerializeField] private bool defeatOnFall = false;
     [SerializeField] private float defeatFallY = -8f;
+    [SerializeField] private AudioSource damageAudioSource;
+    [SerializeField] private AudioClip damageAudioClip;
+    [SerializeField, Range(0f, 1f)] private float damageAudioVolume = 1f;
+    [SerializeField] private YokaiEnergyBarController energyController;
+    [SerializeField] private float damageEnergySeconds = 15f;
 
     private static readonly int HurtHash = Animator.StringToHash("Hurt");
 
@@ -24,6 +29,12 @@ public class PlayerHurt : MonoBehaviour
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         playerController = GetComponent<PlayerController>();
+        if (damageAudioSource == null)
+        {
+            damageAudioSource = GetComponent<AudioSource>();
+        }
+
+        ResolveEnergyController();
     }
 
     private void OnValidate()
@@ -31,6 +42,8 @@ public class PlayerHurt : MonoBehaviour
         hurtCooldown = Mathf.Max(0f, hurtCooldown);
         defaultKnockbackDuration = Mathf.Max(0f, defaultKnockbackDuration);
         hitsUntilDefeat = Mathf.Max(1, hitsUntilDefeat);
+        damageAudioVolume = Mathf.Clamp01(damageAudioVolume);
+        damageEnergySeconds = Mathf.Max(0f, damageEnergySeconds);
     }
 
     private void Update()
@@ -62,6 +75,8 @@ public class PlayerHurt : MonoBehaviour
         hitsTaken++;
 
         ApplyKnockback(direction, horizontalForce, verticalForce, defaultKnockbackDuration);
+        PlayDamageAudio();
+        AddDamageEnergyTime();
 
         if (animator != null)
         {
@@ -96,6 +111,50 @@ public class PlayerHurt : MonoBehaviour
 
         Vector2 currentVelocity = rb.linearVelocity;
         rb.linearVelocity = new Vector2(horizontalDirection * horizontalForce, Mathf.Max(currentVelocity.y, verticalForce));
+    }
+
+    private void PlayDamageAudio()
+    {
+        if (damageAudioClip == null)
+        {
+            return;
+        }
+
+        if (damageAudioSource == null)
+        {
+            damageAudioSource = gameObject.AddComponent<AudioSource>();
+        }
+
+        damageAudioSource.spatialBlend = 0f;
+        damageAudioSource.PlayOneShot(damageAudioClip, damageAudioVolume);
+    }
+
+    private void AddDamageEnergyTime()
+    {
+        if (damageEnergySeconds <= 0f)
+        {
+            return;
+        }
+
+        ResolveEnergyController();
+        if (energyController != null)
+        {
+            energyController.AddSeconds(damageEnergySeconds);
+        }
+    }
+
+    private void ResolveEnergyController()
+    {
+        if (energyController != null)
+        {
+            return;
+        }
+
+#if UNITY_2023_1_OR_NEWER
+        energyController = FindAnyObjectByType<YokaiEnergyBarController>();
+#else
+        energyController = FindObjectOfType<YokaiEnergyBarController>();
+#endif
     }
 
     private void TriggerDefeat()

@@ -4172,7 +4172,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 331.22958, y: -50.958405}
+  m_AnchoredPosition: {x: 331.22955, y: -50.958405}
   m_SizeDelta: {x: -711.87354, y: 49.0416}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &716583685
@@ -12068,7 +12068,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 6261259353239556656, guid: 36f561d868118752a98753b3ff576e55, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.5490196, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -13756,6 +13756,11 @@ MonoBehaviour:
   hitsUntilDefeat: 3
   defeatOnFall: 0
   defeatFallY: -8
+  damageAudioSource: {fileID: 0}
+  damageAudioClip: {fileID: 8300000, guid: d3ff58289e8f3ea4d8971b1910f29b3a, type: 3}
+  damageAudioVolume: 0.35
+  energyController: {fileID: 1677030191}
+  damageEnergySeconds: 40
 --- !u!1 &1421397330
 GameObject:
   m_ObjectHideFlags: 0
@@ -14905,7 +14910,7 @@ MonoBehaviour:
   loadDefeatWhenFull: 1
   defeatSceneName: Derrota
   musicFallbackDelay: 0.35
-  durationInSeconds: 60
+  durationInSeconds: 276
   fillPropertyName: _Fill
   normalizedEnergy: 0
   minEmissionRate: 0
@@ -16057,7 +16062,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -0.000061035156, y: 0.0000038146973}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!199 &1804291404
@@ -16779,7 +16784,7 @@ ParticleSystem:
     donutRadius: 0.2
     m_Position: {x: 0, y: 0, z: 0}
     m_Rotation: {x: 0, y: 0, z: 0}
-    m_Scale: {x: 6.22591, y: 1.3971019, z: 1}
+    m_Scale: {x: 2.3, y: 1.3971019, z: 1}
     placementMode: 0
     m_MeshMaterialIndex: 0
     m_MeshNormalOffset: 0
@@ -21824,6 +21829,7 @@ MonoBehaviour:
   hitboxStartDelay: 0.25
   hitboxActiveTime: 0.25
   attackHitbox: {fileID: 352641195}
+  freezeVerticalDuringAttack: 1
   hitsToDie: 2
   hurtDuration: 0.4
   hurtCooldown: 0.25
@@ -21898,7 +21904,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 1
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!95 &1997445294
 Animator:

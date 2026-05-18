@@ -96,6 +96,18 @@ public class YokaiEnergyBarController : MonoBehaviour
         SetEnergyFromTimer(value);
     }
 
+    public void AddSeconds(float seconds)
+    {
+        if (seconds <= 0f)
+        {
+            return;
+        }
+
+        float duration = Mathf.Max(0.01f, durationInSeconds);
+        chargeTimer = Mathf.Clamp(chargeTimer + seconds, 0f, duration);
+        SetEnergyFromTimer(chargeTimer / duration);
+    }
+
     public void StartCharging()
     {
         ResetEnergy();
@@ -146,8 +158,10 @@ public class YokaiEnergyBarController : MonoBehaviour
 
             if (musicStalledTimer <= musicFallbackDelay)
             {
-                float activeClipLength = Mathf.Max(0.01f, musicSource.clip.length);
-                return musicSource.time / activeClipLength;
+                float activeDuration = Mathf.Max(0.01f, durationInSeconds);
+                float activeTimerProgress = chargeTimer / activeDuration;
+                float activeMusicProgress = musicSource.time / activeDuration;
+                return Mathf.Max(activeTimerProgress, activeMusicProgress);
             }
 
             if (!musicSource.isPlaying && playMusicOnStart)
@@ -155,9 +169,8 @@ public class YokaiEnergyBarController : MonoBehaviour
                 StartMusic();
             }
 
-            float clipLength = Mathf.Max(0.01f, musicSource.clip.length);
             float timerProgress = chargeTimer / Mathf.Max(0.01f, durationInSeconds);
-            float musicProgress = musicSource.time / clipLength;
+            float musicProgress = musicSource.time / Mathf.Max(0.01f, durationInSeconds);
             return Mathf.Max(timerProgress, musicProgress);
         }
 
@@ -234,7 +247,6 @@ public class YokaiEnergyBarController : MonoBehaviour
         if (musicClip != null)
         {
             musicSource.clip = musicClip;
-            durationInSeconds = Mathf.Max(0.01f, musicClip.length);
         }
 
         musicSource.spatialBlend = 0f;
