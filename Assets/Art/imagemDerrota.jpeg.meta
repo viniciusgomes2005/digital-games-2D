@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 5cb1fbeba94f32d9f91f1cbec812648c
+guid: eb780567cf8ed2f49b1c9ced4113584d
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6843552948741474149
-    second: yokai_ascent_wallpaper_0
+      213: -4671945181998610337
+    second: imagemDerrota_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -126,7 +126,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: yokai_ascent_wallpaper_0
+      name: imagemDerrota_0
       rect:
         serializedVersion: 2
         x: 0
@@ -141,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b98ffa01ad0d601a0800000000000000
-      internalID: -6843552948741474149
+      spriteID: f5800e82c9ae92fb0800000000000000
+      internalID: -4671945181998610337
       vertices: []
       indices: 
       edges: []
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      yokai_ascent_wallpaper_0: -6843552948741474149
+      imagemDerrota_0: -4671945181998610337
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
