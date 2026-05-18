@@ -11930,6 +11930,7 @@ GameObject:
   - component: {fileID: 1169197839}
   - component: {fileID: 1169197838}
   - component: {fileID: 1169197837}
+  - component: {fileID: 1169197840}
   m_Layer: 8
   m_Name: Plataform_02 (34)
   m_TagString: Ground
@@ -12076,6 +12077,22 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &1169197840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1169197835}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cffacfae82a4b4aa01529686e416bad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VictoryPlatformHoldTrigger
+  playerTag: Player
+  requiredStayTime: 2
+  victorySceneName: Vitoria
+  overlapPadding: {x: 0.1, y: 0.35}
 --- !u!1 &1198418178
 GameObject:
   m_ObjectHideFlags: 0
@@ -13735,6 +13752,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHurt
   hurtCooldown: 0.5
   defaultKnockbackDuration: 0.35
+  defeatAfterHits: 0
+  hitsUntilDefeat: 3
+  defeatOnFall: 0
+  defeatFallY: -8
 --- !u!1 &1421397330
 GameObject:
   m_ObjectHideFlags: 0
@@ -13873,6 +13894,7 @@ GameObject:
   - component: {fileID: 1453606541}
   - component: {fileID: 1453606540}
   - component: {fileID: 1453606539}
+  - component: {fileID: 1453606542}
   m_Layer: 8
   m_Name: Plataform_02 (33)
   m_TagString: Ground
@@ -14019,6 +14041,22 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &1453606542
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1453606537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cffacfae82a4b4aa01529686e416bad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VictoryPlatformHoldTrigger
+  playerTag: Player
+  requiredStayTime: 2
+  victorySceneName: Vitoria
+  overlapPadding: {x: 0.1, y: 0.35}
 --- !u!1 &1473375170
 GameObject:
   m_ObjectHideFlags: 0
@@ -14864,6 +14902,9 @@ MonoBehaviour:
   syncWithMusic: 1
   playMusicOnStart: 1
   loopMusic: 0
+  loadDefeatWhenFull: 1
+  defeatSceneName: Derrota
+  musicFallbackDelay: 0.35
   durationInSeconds: 60
   fillPropertyName: _Fill
   normalizedEnergy: 0

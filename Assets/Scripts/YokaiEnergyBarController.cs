@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class YokaiEnergyBarController : MonoBehaviour
 {
@@ -13,6 +14,9 @@ public class YokaiEnergyBarController : MonoBehaviour
     [SerializeField] private bool syncWithMusic = true;
     [SerializeField] private bool playMusicOnStart = true;
     [SerializeField] private bool loopMusic = false;
+    [SerializeField] private bool loadDefeatWhenFull = true;
+    [SerializeField] private string defeatSceneName = "Derrota";
+    [SerializeField] private float musicFallbackDelay = 0.35f;
     [SerializeField] private float durationInSeconds = 60f;
     [SerializeField] private string fillPropertyName = "_Fill";
     [SerializeField, Range(0f, 1f)] private float normalizedEnergy;
@@ -31,7 +35,10 @@ public class YokaiEnergyBarController : MonoBehaviour
     [SerializeField] private Color maxParticleColor = new Color(1f, 0.9f, 0.2f, 1f);
 
     private bool isCharging;
+    private bool defeatTriggered;
     private float chargeTimer;
+    private float lastMusicTime;
+    private float musicStalledTimer;
 
     public float NormalizedEnergy => normalizedEnergy;
 
@@ -65,12 +72,14 @@ public class YokaiEnergyBarController : MonoBehaviour
         if (normalizedEnergy >= 1f)
         {
             isCharging = false;
+            TriggerDefeatIfNeeded();
         }
     }
 
     private void OnValidate()
     {
         durationInSeconds = Mathf.Max(0.01f, durationInSeconds);
+        musicFallbackDelay = Mathf.Max(0f, musicFallbackDelay);
         minEmissionRate = Mathf.Max(0f, minEmissionRate);
         maxEmissionRate = Mathf.Max(minEmissionRate, maxEmissionRate);
         minStartSpeed = Mathf.Max(0f, minStartSpeed);
@@ -98,7 +107,10 @@ public class YokaiEnergyBarController : MonoBehaviour
     public void ResetEnergy()
     {
         isCharging = false;
+        defeatTriggered = false;
         chargeTimer = 0f;
+        lastMusicTime = 0f;
+        musicStalledTimer = 0f;
         SetEnergyFromTimer(0f);
 
         if (energyParticleSystem != null)
@@ -111,14 +123,42 @@ public class YokaiEnergyBarController : MonoBehaviour
     {
         normalizedEnergy = Mathf.Clamp01(value);
         ApplyEnergy();
+
+        if (normalizedEnergy >= 1f)
+        {
+            TriggerDefeatIfNeeded();
+        }
     }
 
     private float GetChargeProgress()
     {
         if (syncWithMusic && musicSource != null && musicSource.clip != null)
         {
+            if (musicSource.isPlaying && musicSource.time > lastMusicTime + 0.001f)
+            {
+                lastMusicTime = musicSource.time;
+                musicStalledTimer = 0f;
+            }
+            else
+            {
+                musicStalledTimer += Time.deltaTime;
+            }
+
+            if (musicStalledTimer <= musicFallbackDelay)
+            {
+                float activeClipLength = Mathf.Max(0.01f, musicSource.clip.length);
+                return musicSource.time / activeClipLength;
+            }
+
+            if (!musicSource.isPlaying && playMusicOnStart)
+            {
+                StartMusic();
+            }
+
             float clipLength = Mathf.Max(0.01f, musicSource.clip.length);
-            return musicSource.time / clipLength;
+            float timerProgress = chargeTimer / Mathf.Max(0.01f, durationInSeconds);
+            float musicProgress = musicSource.time / clipLength;
+            return Mathf.Max(timerProgress, musicProgress);
         }
 
         float duration = Mathf.Max(0.01f, durationInSeconds);
@@ -209,6 +249,19 @@ public class YokaiEnergyBarController : MonoBehaviour
         }
 
         musicSource.time = 0f;
+        lastMusicTime = 0f;
+        musicStalledTimer = 0f;
         musicSource.Play();
+    }
+
+    private void TriggerDefeatIfNeeded()
+    {
+        if (!loadDefeatWhenFull || defeatTriggered || string.IsNullOrWhiteSpace(defeatSceneName))
+        {
+            return;
+        }
+
+        defeatTriggered = true;
+        SceneManager.LoadScene(defeatSceneName);
     }
 }

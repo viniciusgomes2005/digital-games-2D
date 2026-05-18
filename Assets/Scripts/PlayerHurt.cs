@@ -1,9 +1,14 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerHurt : MonoBehaviour
 {
     [SerializeField] private float hurtCooldown = 0.5f;
     [SerializeField] private float defaultKnockbackDuration = 0.35f;
+    [SerializeField] private bool defeatAfterHits = false;
+    [SerializeField] private int hitsUntilDefeat = 3;
+    [SerializeField] private bool defeatOnFall = false;
+    [SerializeField] private float defeatFallY = -8f;
 
     private static readonly int HurtHash = Animator.StringToHash("Hurt");
 
@@ -11,6 +16,8 @@ public class PlayerHurt : MonoBehaviour
     private Rigidbody2D rb;
     private PlayerController playerController;
     private float nextHurtTime;
+    private int hitsTaken;
+    private bool defeatTriggered;
 
     private void Awake()
     {
@@ -23,6 +30,20 @@ public class PlayerHurt : MonoBehaviour
     {
         hurtCooldown = Mathf.Max(0f, hurtCooldown);
         defaultKnockbackDuration = Mathf.Max(0f, defaultKnockbackDuration);
+        hitsUntilDefeat = Mathf.Max(1, hitsUntilDefeat);
+    }
+
+    private void Update()
+    {
+        if (defeatTriggered || !defeatOnFall)
+        {
+            return;
+        }
+
+        if (transform.position.y <= defeatFallY)
+        {
+            TriggerDefeat();
+        }
     }
 
     public void TakeHit()
@@ -38,12 +59,18 @@ public class PlayerHurt : MonoBehaviour
         }
 
         nextHurtTime = Time.time + hurtCooldown;
+        hitsTaken++;
 
         ApplyKnockback(direction, horizontalForce, verticalForce, defaultKnockbackDuration);
 
         if (animator != null)
         {
             animator.SetTrigger(HurtHash);
+        }
+
+        if (defeatAfterHits && hitsTaken >= hitsUntilDefeat)
+        {
+            TriggerDefeat();
         }
     }
 
@@ -69,5 +96,16 @@ public class PlayerHurt : MonoBehaviour
 
         Vector2 currentVelocity = rb.linearVelocity;
         rb.linearVelocity = new Vector2(horizontalDirection * horizontalForce, Mathf.Max(currentVelocity.y, verticalForce));
+    }
+
+    private void TriggerDefeat()
+    {
+        if (defeatTriggered)
+        {
+            return;
+        }
+
+        defeatTriggered = true;
+        SceneManager.LoadScene("Derrota");
     }
 }

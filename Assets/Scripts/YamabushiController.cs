@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Controla o comportamento do inimigo Yamabushi.
@@ -555,7 +556,7 @@ public class YamabushiController : MonoBehaviour
     {
         // Duração aproximada da animação de morte (Dead tem 6 frames a ~12fps ≈ 0.5s)
         yield return new WaitForSeconds(1.5f);
-        Destroy(gameObject);
+        SceneManager.LoadScene("Vitoria");
     }
 
     // ─── Utilitários ─────────────────────────────────────────────────────────
