@@ -5,9 +5,14 @@ public class YokaiEnergyBarController : MonoBehaviour
     [Header("References")]
     [SerializeField] private Material energyBarMaterial;
     [SerializeField] private ParticleSystem energyParticleSystem;
+    [SerializeField] private AudioSource musicSource;
+    [SerializeField] private AudioClip musicClip;
 
     [Header("Energy")]
     [SerializeField] private bool autoStartOnPlay = true;
+    [SerializeField] private bool syncWithMusic = true;
+    [SerializeField] private bool playMusicOnStart = true;
+    [SerializeField] private bool loopMusic = false;
     [SerializeField] private float durationInSeconds = 60f;
     [SerializeField] private string fillPropertyName = "_Fill";
     [SerializeField, Range(0f, 1f)] private float normalizedEnergy;
@@ -30,6 +35,12 @@ public class YokaiEnergyBarController : MonoBehaviour
 
     public float NormalizedEnergy => normalizedEnergy;
 
+    private void Awake()
+    {
+        ResolveMusicSource();
+        ApplyMusicSettings();
+    }
+
     private void Start()
     {
         if (autoStartOnPlay)
@@ -49,8 +60,7 @@ public class YokaiEnergyBarController : MonoBehaviour
         }
 
         chargeTimer += Time.deltaTime;
-        float duration = Mathf.Max(0.01f, durationInSeconds);
-        SetEnergyFromTimer(chargeTimer / duration);
+        SetEnergyFromTimer(GetChargeProgress());
 
         if (normalizedEnergy >= 1f)
         {
@@ -82,6 +92,7 @@ public class YokaiEnergyBarController : MonoBehaviour
         ResetEnergy();
         isCharging = true;
         EnsureParticlesArePlaying();
+        StartMusic();
     }
 
     public void ResetEnergy()
@@ -100,6 +111,18 @@ public class YokaiEnergyBarController : MonoBehaviour
     {
         normalizedEnergy = Mathf.Clamp01(value);
         ApplyEnergy();
+    }
+
+    private float GetChargeProgress()
+    {
+        if (syncWithMusic && musicSource != null && musicSource.clip != null)
+        {
+            float clipLength = Mathf.Max(0.01f, musicSource.clip.length);
+            return musicSource.time / clipLength;
+        }
+
+        float duration = Mathf.Max(0.01f, durationInSeconds);
+        return chargeTimer / duration;
     }
 
     private void ApplyEnergy()
@@ -146,5 +169,46 @@ public class YokaiEnergyBarController : MonoBehaviour
         {
             energyParticleSystem.Play();
         }
+    }
+
+    private void ResolveMusicSource()
+    {
+        if (musicSource == null)
+        {
+            musicSource = GetComponent<AudioSource>();
+        }
+
+        if (musicSource == null && musicClip != null)
+        {
+            musicSource = gameObject.AddComponent<AudioSource>();
+        }
+    }
+
+    private void ApplyMusicSettings()
+    {
+        if (musicSource == null)
+        {
+            return;
+        }
+
+        if (musicClip != null)
+        {
+            musicSource.clip = musicClip;
+            durationInSeconds = Mathf.Max(0.01f, musicClip.length);
+        }
+
+        musicSource.spatialBlend = 0f;
+        musicSource.loop = loopMusic;
+    }
+
+    private void StartMusic()
+    {
+        if (!playMusicOnStart || musicSource == null || musicSource.clip == null)
+        {
+            return;
+        }
+
+        musicSource.time = 0f;
+        musicSource.Play();
     }
 }

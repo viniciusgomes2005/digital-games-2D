@@ -3,23 +3,34 @@ using UnityEngine;
 public class PlayerHurt : MonoBehaviour
 {
     [SerializeField] private float hurtCooldown = 0.5f;
+    [SerializeField] private float defaultKnockbackDuration = 0.35f;
 
     private static readonly int HurtHash = Animator.StringToHash("Hurt");
 
     private Animator animator;
+    private Rigidbody2D rb;
+    private PlayerController playerController;
     private float nextHurtTime;
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody2D>();
+        playerController = GetComponent<PlayerController>();
     }
 
     private void OnValidate()
     {
         hurtCooldown = Mathf.Max(0f, hurtCooldown);
+        defaultKnockbackDuration = Mathf.Max(0f, defaultKnockbackDuration);
     }
 
     public void TakeHit()
+    {
+        TakeHit(Vector2.zero, 0f, 0f);
+    }
+
+    public void TakeHit(Vector2 direction, float horizontalForce, float verticalForce)
     {
         if (Time.time < nextHurtTime)
         {
@@ -28,9 +39,35 @@ public class PlayerHurt : MonoBehaviour
 
         nextHurtTime = Time.time + hurtCooldown;
 
+        ApplyKnockback(direction, horizontalForce, verticalForce, defaultKnockbackDuration);
+
         if (animator != null)
         {
             animator.SetTrigger(HurtHash);
         }
+    }
+
+    private void ApplyKnockback(Vector2 direction, float horizontalForce, float verticalForce, float duration)
+    {
+        if (horizontalForce <= 0f)
+        {
+            return;
+        }
+
+        float horizontalDirection = Mathf.Abs(direction.x) > 0.01f ? Mathf.Sign(direction.x) : 1f;
+
+        if (playerController != null)
+        {
+            playerController.ApplyKnockback(direction, horizontalForce, verticalForce, duration);
+            return;
+        }
+
+        if (rb == null)
+        {
+            return;
+        }
+
+        Vector2 currentVelocity = rb.linearVelocity;
+        rb.linearVelocity = new Vector2(horizontalDirection * horizontalForce, Mathf.Max(currentVelocity.y, verticalForce));
     }
 }

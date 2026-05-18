@@ -25,6 +25,8 @@ public class PlayerController : MonoBehaviour
     private bool doubleJumpRequested;
     private bool jumpAttackDiveRequested;
     private bool canDoubleJump;
+    private Vector2 knockbackVelocity;
+    private float knockbackTimer;
 
     public bool IsGrounded => isGrounded;
     public float VerticalVelocity => rb != null ? rb.linearVelocity.y : 0f;
@@ -50,6 +52,11 @@ public class PlayerController : MonoBehaviour
     {
         horizontalInput = Input.GetAxisRaw("Horizontal");
         isGrounded = CheckGrounded();
+
+        if (knockbackTimer > 0f)
+        {
+            knockbackTimer -= Time.deltaTime;
+        }
 
         if (isGrounded)
         {
@@ -104,6 +111,16 @@ public class PlayerController : MonoBehaviour
         }
 
         Vector2 currentVelocity = rb.linearVelocity;
+        if (knockbackTimer > 0f)
+        {
+            rb.linearVelocity = new Vector2(knockbackVelocity.x, Mathf.Max(currentVelocity.y, knockbackVelocity.y));
+            jumpRequested = false;
+            doubleJumpRequested = false;
+            jumpAttackDiveRequested = false;
+            isGrounded = CheckGrounded();
+            return;
+        }
+
         float verticalVelocity = currentVelocity.y;
         if (jumpRequested)
         {
@@ -133,6 +150,18 @@ public class PlayerController : MonoBehaviour
         }
 
         jumpAttackDiveRequested = true;
+    }
+
+    public void ApplyKnockback(Vector2 direction, float horizontalForce, float verticalForce, float duration)
+    {
+        if (horizontalForce <= 0f || duration <= 0f)
+        {
+            return;
+        }
+
+        float horizontalDirection = Mathf.Abs(direction.x) > 0.01f ? Mathf.Sign(direction.x) : 1f;
+        knockbackVelocity = new Vector2(horizontalDirection * horizontalForce, verticalForce);
+        knockbackTimer = duration;
     }
 
     private bool CheckGrounded()
