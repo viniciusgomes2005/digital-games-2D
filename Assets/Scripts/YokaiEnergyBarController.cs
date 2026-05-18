@@ -1,9 +1,11 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class YokaiEnergyBarController : MonoBehaviour
 {
     [Header("References")]
+    [SerializeField] private Image energyImage;
     [SerializeField] private Material energyBarMaterial;
     [SerializeField] private ParticleSystem energyParticleSystem;
     [SerializeField] private AudioSource musicSource;
@@ -44,6 +46,7 @@ public class YokaiEnergyBarController : MonoBehaviour
 
     private void Awake()
     {
+        ResolveImage();
         ResolveMusicSource();
         ApplyMusicSettings();
     }
@@ -192,6 +195,11 @@ public class YokaiEnergyBarController : MonoBehaviour
         }
 
         energyBarMaterial.SetFloat(fillPropertyName, normalizedEnergy);
+
+        if (energyImage != null && energyImage.material != null)
+        {
+            energyImage.material.SetFloat(fillPropertyName, normalizedEnergy);
+        }
     }
 
     private void UpdateParticles()
@@ -234,6 +242,14 @@ public class YokaiEnergyBarController : MonoBehaviour
         if (musicSource == null && musicClip != null)
         {
             musicSource = gameObject.AddComponent<AudioSource>();
+        }
+    }
+
+    private void ResolveImage()
+    {
+        if (energyImage == null)
+        {
+            energyImage = GetComponent<Image>();
         }
     }
 

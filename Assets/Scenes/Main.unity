@@ -14899,12 +14899,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 799c2a2930fc62c4ca6318fcbbf977a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::YokaiEnergyBarController
+  energyImage: {fileID: 1677030189}
   energyBarMaterial: {fileID: 2100000, guid: 4c541e924f909c34cac21cafe59420a0, type: 2}
   energyParticleSystem: {fileID: 1804291405}
   musicSource: {fileID: 0}
   musicClip: {fileID: 8300000, guid: d0df87ee30628c500b214cb086fceff0, type: 3}
   autoStartOnPlay: 1
-  syncWithMusic: 1
+  syncWithMusic: 0
   playMusicOnStart: 1
   loopMusic: 0
   loadDefeatWhenFull: 1
