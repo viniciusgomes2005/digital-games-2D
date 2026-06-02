@@ -31,6 +31,7 @@ public class FrogEnemy : MonoBehaviour
     [SerializeField] private float hitboxStartDelay = 0.25f;
     [SerializeField] private float hitboxActiveTime = 0.25f;
     [SerializeField] private GameObject attackHitbox;
+    [SerializeField] private bool freezeVerticalDuringAttack = true;
 
     [Header("Hurt")]
     [SerializeField] private int hitsToDie = 2;
@@ -51,6 +52,8 @@ public class FrogEnemy : MonoBehaviour
     private int hitsTaken;
     private float nextHurtTime;
     private float initialScaleX;
+    private float originalGravityScale;
+    private bool attackGravitySuspended;
     private Coroutine attackRoutine;
     private Coroutine hurtRoutine;
 
@@ -58,6 +61,8 @@ public class FrogEnemy : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        originalGravityScale = rb.gravityScale;
+        rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
 
         initialScaleX = Mathf.Abs(transform.localScale.x);
         if (initialScaleX <= Mathf.Epsilon)
@@ -99,6 +104,7 @@ public class FrogEnemy : MonoBehaviour
         }
 
         SetAttackHitboxActive(false);
+        RestoreAttackGravity();
         isAttacking = false;
         isHurt = false;
     }
@@ -167,6 +173,7 @@ public class FrogEnemy : MonoBehaviour
         {
             StopCoroutine(attackRoutine);
             attackRoutine = null;
+            RestoreAttackGravity();
         }
 
         if (hurtRoutine != null)
@@ -204,6 +211,7 @@ public class FrogEnemy : MonoBehaviour
         isAttacking = true;
 
         StopHorizontalMovement();
+        SuspendAttackGravity();
         SetMovingAnimation(false);
         FacePlayer();
 
@@ -220,6 +228,7 @@ public class FrogEnemy : MonoBehaviour
 
         if (isHurt)
         {
+            RestoreAttackGravity();
             isAttacking = false;
             attackRoutine = null;
             yield break;
@@ -240,6 +249,7 @@ public class FrogEnemy : MonoBehaviour
             yield return new WaitForSeconds(attackCooldown);
         }
 
+        RestoreAttackGravity();
         isAttacking = false;
         attackRoutine = null;
     }
@@ -355,6 +365,30 @@ public class FrogEnemy : MonoBehaviour
 
         Vector2 currentVelocity = rb.linearVelocity;
         rb.linearVelocity = new Vector2(0f, currentVelocity.y);
+    }
+
+    private void SuspendAttackGravity()
+    {
+        if (!freezeVerticalDuringAttack || rb == null)
+        {
+            return;
+        }
+
+        attackGravitySuspended = true;
+        originalGravityScale = rb.gravityScale;
+        rb.gravityScale = 0f;
+        rb.linearVelocity = new Vector2(0f, 0f);
+    }
+
+    private void RestoreAttackGravity()
+    {
+        if (!attackGravitySuspended || rb == null)
+        {
+            return;
+        }
+
+        rb.gravityScale = originalGravityScale;
+        attackGravitySuspended = false;
     }
 
     private void SetMovingAnimation(bool isMoving)
