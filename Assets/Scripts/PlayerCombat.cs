@@ -116,7 +116,7 @@ public class PlayerCombat : MonoBehaviour
             attack3Requested = false;
         }
 
-        if (!Input.GetKeyDown(attackKey))
+        if (!IsAttackPressed())
         {
             return;
         }
@@ -165,6 +165,16 @@ public class PlayerCombat : MonoBehaviour
 
         // Dispare este metodo quando o personagem receber hit.
         animator.SetTrigger(HurtHash);
+    }
+
+    private bool IsAttackPressed()
+    {
+        if (Input.GetKeyDown(attackKey))
+        {
+            return true;
+        }
+
+        return MobileInputController.Instance != null && MobileInputController.Instance.ConsumeAttackPressed();
     }
 
     private void TryRequestAttack2(AnimatorStateInfo attack1StateInfo)

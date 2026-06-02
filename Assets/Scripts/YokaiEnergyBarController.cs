@@ -14,11 +14,12 @@ public class YokaiEnergyBarController : MonoBehaviour
 
     [Header("Particles")]
     [SerializeField] private float minEmissionRate = 0f;
-    [SerializeField] private float maxEmissionRate = 60f;
+    [SerializeField] private float maxEmissionRate = 35f;
     [SerializeField] private float minStartSpeed = 0.25f;
-    [SerializeField] private float maxStartSpeed = 2.5f;
+    [SerializeField] private float maxStartSpeed = 1.8f;
     [SerializeField] private float minStartSize = 0.08f;
     [SerializeField] private float maxStartSize = 0.18f;
+    [SerializeField] private int mobileMaxParticles = 120;
 
     [Header("Optional Particle Color")]
     [SerializeField] private bool scaleParticleColor = false;
@@ -67,6 +68,7 @@ public class YokaiEnergyBarController : MonoBehaviour
         maxStartSpeed = Mathf.Max(minStartSpeed, maxStartSpeed);
         minStartSize = Mathf.Max(0f, minStartSize);
         maxStartSize = Mathf.Max(minStartSize, maxStartSize);
+        mobileMaxParticles = Mathf.Max(16, mobileMaxParticles);
         normalizedEnergy = Mathf.Clamp01(normalizedEnergy);
     }
 
@@ -131,6 +133,7 @@ public class YokaiEnergyBarController : MonoBehaviour
         emission.rateOverTime = Mathf.Lerp(minEmissionRate, maxEmissionRate, normalizedEnergy);
 
         ParticleSystem.MainModule main = energyParticleSystem.main;
+        main.maxParticles = Mathf.Min(main.maxParticles, mobileMaxParticles);
         main.startSpeed = Mathf.Lerp(minStartSpeed, maxStartSpeed, normalizedEnergy);
         main.startSize = Mathf.Lerp(minStartSize, maxStartSize, normalizedEnergy);
 

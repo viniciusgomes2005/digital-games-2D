@@ -4,6 +4,7 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private KeyCode jumpKey = KeyCode.Space;
+    [SerializeField] private KeyCode downKey = KeyCode.S;
     [SerializeField] private float jumpForce = 16f;
     [SerializeField] private float doubleJumpForce = 16f;
     [SerializeField] private float jumpAttackDiveSpeed = 12f;
@@ -29,6 +30,7 @@ public class PlayerController : MonoBehaviour
     public bool IsGrounded => isGrounded;
     public float VerticalVelocity => rb != null ? rb.linearVelocity.y : 0f;
     public bool IsAirborne => !isGrounded || Mathf.Abs(VerticalVelocity) > 0.1f;
+    public bool DownHeld { get; private set; }
 
     private void Awake()
     {
@@ -48,7 +50,8 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        horizontalInput = Input.GetAxisRaw("Horizontal");
+        horizontalInput = GetHorizontalInput();
+        DownHeld = Input.GetKey(downKey) || (MobileInputController.Instance != null && MobileInputController.Instance.DownHeld);
         isGrounded = CheckGrounded();
 
         if (isGrounded)
@@ -57,7 +60,7 @@ public class PlayerController : MonoBehaviour
             jumpAttackDiveRequested = false;
         }
 
-        if (Input.GetKeyDown(jumpKey))
+        if (IsJumpPressed())
         {
             if (isGrounded)
             {
@@ -133,6 +136,29 @@ public class PlayerController : MonoBehaviour
         }
 
         jumpAttackDiveRequested = true;
+    }
+
+    private float GetHorizontalInput()
+    {
+        float keyboardInput = Input.GetAxisRaw("Horizontal");
+        float mobileInput = MobileInputController.Instance != null ? MobileInputController.Instance.HorizontalInput : 0f;
+
+        if (Mathf.Abs(mobileInput) > 0.01f)
+        {
+            return mobileInput;
+        }
+
+        return keyboardInput;
+    }
+
+    private bool IsJumpPressed()
+    {
+        if (Input.GetKeyDown(jumpKey))
+        {
+            return true;
+        }
+
+        return MobileInputController.Instance != null && MobileInputController.Instance.ConsumeJumpPressed();
     }
 
     private bool CheckGrounded()
