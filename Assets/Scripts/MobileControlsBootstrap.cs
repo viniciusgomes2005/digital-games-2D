@@ -94,7 +94,6 @@ public class MobileControlsBootstrap : MonoBehaviour
 
         CreateButton(root, "LeftButton", "<", MobileButton.MobileButtonAction.Left, new Vector2(0f, 0f), new Vector2(0f, 0f), new Vector2(150f, 135f), new Vector2(150f, 125f));
         CreateButton(root, "RightButton", ">", MobileButton.MobileButtonAction.Right, new Vector2(0f, 0f), new Vector2(0f, 0f), new Vector2(330f, 135f), new Vector2(150f, 125f));
-        CreateButton(root, "DownButton", "v", MobileButton.MobileButtonAction.Down, new Vector2(0f, 0f), new Vector2(0f, 0f), new Vector2(240f, 285f), new Vector2(135f, 115f));
         CreateButton(root, "JumpButton", "Pular", MobileButton.MobileButtonAction.Jump, new Vector2(1f, 0f), new Vector2(1f, 0f), new Vector2(-330f, 150f), new Vector2(185f, 135f));
         CreateButton(root, "AttackButton", "Atacar", MobileButton.MobileButtonAction.Attack, new Vector2(1f, 0f), new Vector2(1f, 0f), new Vector2(-125f, 135f), new Vector2(185f, 135f));
     }

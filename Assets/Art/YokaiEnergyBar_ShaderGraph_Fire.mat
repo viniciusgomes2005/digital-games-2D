@@ -51,13 +51,14 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Fill: 0.5843455
+    - _Fill: 0.01641559
     - _FireVel: -0.5
     - _NoiseInf: 0.1
     - _NoiseScale1: 10
     - _NoiseScale2: 100
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _XRMotionVectorsPass: 1
     - _k: 0.29
     m_Colors:
     - _Color: {r: 14.259475, g: 0.6836907, b: 0, a: 1}
